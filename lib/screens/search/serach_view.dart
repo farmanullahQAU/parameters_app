@@ -78,20 +78,28 @@ _addWidthSlider()
 
         return Hero(
           tag: 1,
-          child: RangeSlider(
-                    values: _controller._currentRangeValues.value,
-                    max: 100,
-                    divisions: 5,
-                    labels: RangeLabels(
-                   _controller.     _currentRangeValues.value.start.round().toString(),
-                 _controller.       _currentRangeValues.value.end.round().toString(),
-                    ),
-                    onChanged: (RangeValues values) {
-                   
-                     _controller.   _currentRangeValues.value = values;
-                      
-                    },
-                  ),
+          child: Column(
+            children: [
+
+              Obx(()=>Text(_controller._currentRangeValues.toString())),
+              RangeSlider(
+                        values: _controller._currentRangeValues.value,
+                        max: 100,
+                        divisions: 5,
+                        labels: RangeLabels(
+                       _controller.     currentRangeValues.start.round().toString(),
+                     _controller.       currentRangeValues.end.round().toString(),
+                        ),
+                        onChanged: (RangeValues values) {
+                       
+                         _controller.   currentRangeValues = values;
+
+                         print(values);
+                          
+                        },
+                      ),
+            ],
+          ),
         );
   }
 
@@ -99,19 +107,19 @@ _addWidthSlider()
   
   Widget
   addWidthValueRow() {
-    return Container(
-      color:Theme.of(Get.context!).primaryColor,
-      height: 200,
-      child: Hero(
-        tag: 1,
-   
-        
-        child: Column(
-          children: [
-            Expanded(
-              
-        
-              child: Container(
+    return Column(
+      children: [
+        SizedBox(
+          height: 60,
+     
+          
+    
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+         Text(rimDimeter),
+
+              Expanded(
                 child: ListView.builder(
                   
                 
@@ -150,58 +158,67 @@ _addWidthSlider()
                    ));
                 }),
               ),
-            ),
-        
-        
-        
-            Flexible(
-              child: ListView.builder(
-                
-              
-              scrollDirection: Axis.horizontal,
-              
-                shrinkWrap: true,
-                
-                itemCount: rimWidthValues.length,
-                
-                itemBuilder: (_,index){
-                  final width=rimWidthValues[index].toDouble();
-              
-                return Obx(()=>
-                
-                   
-                
-                 InkWell(
-                   onTap: (){
+         
+         
+            ],
+          ),
+        ),
+    
+    
+    
+        SizedBox(
+          height: 60,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+
+              Text(rimWidth),
+              Expanded(
+                child: ListView.builder(
                   
-                     _controller.currentRimWidthIndex=width;
-                   },
-                   child: CircleAvatar(
+                
+                scrollDirection: Axis.horizontal,
+                
+                  shrinkWrap: true,
+                  
+                  itemCount: rimWidthValues.length,
+                  
+                  itemBuilder: (_,index){
+                    final width=rimWidthValues[index].toDouble();
+                
+                  return Obx(()=>
+                  
                      
-                 backgroundColor: 
-                 
-                 
-                            _controller.currentRimWidthIndex==width?
-                 
-                         
-                            null:
-                               
-                                  Theme.of(Get.context!).primaryColorLight
-                 
-                 ,           
-                     child: Text(width.toString()),),
-                 ));
-              }),
-            ),
-        
-        
-        
-        
-        
-          ],
+                  
+                   InkWell(
+                     onTap: (){
+                    
+                       _controller.currentRimWidthIndex=width;
+                     },
+                     child: CircleAvatar(
+                       
+                   backgroundColor: 
+                   
+                   
+                              _controller.currentRimWidthIndex==width?
+                   
+                           
+                              null:
+                                 
+                                    Theme.of(Get.context!).primaryColorLight
+                   
+                   ,           
+                       child: Text(width.toString()),),
+                   ));
+                }),
+              ),
+            ],
+          ),
         ),
-      
-        ),
+     
+           
+    
+      ],
     );
 
 
@@ -219,6 +236,14 @@ _addWidthSlider()
 
 class SearchViewController extends GetxController{
 
+  @override
+  void onInit() {
+
+    _initRimOffsetValues();
+    _currentRimOffsetValue=rimOffsetValues[0].obs;
+    super.onInit();
+  }
+
    final RxDouble? _currentRimWidthIndex=4.0.obs;
    double? get currentRimWidthIndex=>_currentRimWidthIndex?.value;
 
@@ -231,8 +256,24 @@ class SearchViewController extends GetxController{
 
   final _currentRangeValues = const RangeValues(40, 80).obs;
 
-  final isExactWidth=false.obs;
+  RangeValues get currentRangeValues=>_currentRangeValues.value;
 
+  set currentRangeValues(RangeValues values)=>_currentRangeValues.value=values;
+
+   late final RxDouble? _currentRimOffsetValue;
+   double? get currentRimOffsetValue=>_currentRimOffsetValue?.value;
+   set currentRimOffsetValue(double? offset)=>_currentRimOffsetValue?.value=offset!;
+
+
+  final isExactWidth=false.obs;
+_initRimOffsetValues(){
+
+  for(int i=-70;i<=130;i++)
+  {
+
+    rimOffsetValues.add(i.toDouble());
+  }
+}
 
 }
 
