@@ -18,9 +18,9 @@ class Binder extends Bindings {
      Get.put(AddParametersController());
      Get.put(SettingsController());
      Get.put(DetailsViewController());
-     Get.put(SearchViewController());
 
      
+     Get.lazyPut<SearchViewController>(() => SearchViewController());
 
      
 

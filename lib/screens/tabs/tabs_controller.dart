@@ -16,7 +16,7 @@ class TabsViewController extends GetxController{
 final List<Widget> _tabs=[
   HomeView(),
   FavoriteView(),
-SearchView(),
+new SearchView(),
 
 AddParametersView(),
 

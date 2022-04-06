@@ -112,3 +112,13 @@ final List<int> rimDimetersValues = [
     final List<double> rimOffsetValues = [
 
   ];
+
+  const double rimWidthMinimum=4.0;
+  const double rimWidthMaximum=13.0;
+  
+  const double rimDimeterMinimum=12.0;
+  const double rimDimeterMaximum=30.0;
+    const double rimOffsetMinimum=-170.0;
+  const double rimOffsetMaximum=130.0;
+      const double tyreWidthMinimum=135.0;
+  const double tyreWidthMaximum=375;

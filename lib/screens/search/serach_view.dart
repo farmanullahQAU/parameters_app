@@ -16,98 +16,84 @@ import '../home/home_controller.dart';
 
 
 
-class SearchView extends StatelessWidget {
-final _controller=Get.find<SearchViewController>();
+class SearchView extends GetView<SearchViewController> {
+
+
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       appBar: AppBar(title: Text("kkk"),),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-    
-    
-    
-    Row(children: [
-    
-    
-      InkWell(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
             
-            onTap: (){
-    
-              _controller.isExactWidth.value=true;
-            },
-            child: Chip(label: Text('Less or Equal'),)),
-    
-    
-      InkWell(
-        
-        onTap: (){
-
-                         _controller.isExactWidth.value=false;
-
-        },
-        child: CircleAvatar(child: Text('50'),))
-    ,
-      CircleAvatar(child: Text('60'),)
-    
-    ],),
-    
-        
-    Obx(()=>
-    
-    _controller.isExactWidth.isTrue?
-
-addWidthValueRow():
-
-_addWidthSlider()
-
-
-
-
-    )
             
-          ],
+            
+            Row(children: [
+            
+            
+              InkWell(
+              
+              onTap: (){
+            
+                controller.isExactWidth.value=true;
+              },
+              child: Chip(label: Text('Less or Equal'),)),
+            
+            
+              InkWell(
+          
+          onTap: (){
+        
+                           controller.isExactWidth.value=false;
+        
+          },
+          child: CircleAvatar(child: Text('50'),))
+            ,
+              CircleAvatar(child: Text('60'),)
+            
+            ],),
+            
+          
+            Obx(()=>
+            
+         
+        
+        AnimatedSwitcher(
+                          transitionBuilder: (child,animation)=>SizeTransition(sizeFactor: animation,child: child,),
+          
+          
+          duration: Duration(milliseconds: 500),
+          child:    controller.isExactWidth.isTrue?
+        
+          
+          addWidthValueRow():
+        
+        AddSlioder()
+        )
+        
+        
+        
+        
+            )
+              
+            ],
+          ),
         ),
       ),
     );
   }
 
-  _addWidthSlider(){
-
-        return Hero(
-          tag: 1,
-          child: Column(
-            children: [
-
-              Obx(()=>Text(_controller._currentRangeValues.toString())),
-              RangeSlider(
-                        values: _controller._currentRangeValues.value,
-                        max: 100,
-                        divisions: 5,
-                        labels: RangeLabels(
-                       _controller.     currentRangeValues.start.round().toString(),
-                     _controller.       currentRangeValues.end.round().toString(),
-                        ),
-                        onChanged: (RangeValues values) {
-                       
-                         _controller.   currentRangeValues = values;
-
-                         print(values);
-                          
-                        },
-                      ),
-            ],
-          ),
-        );
-  }
-
+ 
   
   
   Widget
   addWidthValueRow() {
     return Column(
+      key: Key("1"),
       children: [
         SizedBox(
           height: 60,
@@ -139,22 +125,37 @@ _addWidthSlider()
                    InkWell(
                      onTap: (){
                     
-                       _controller.currentRimDimeter=dimeter;
+                       controller.currentRimDimeter=dimeter;
                      },
-                     child: CircleAvatar(
+                     child: AnimatedSwitcher(
+                      //  transitionBuilder: (child,animation)=>SizeTransition(sizeFactor: animation,child: child,),
+                       duration: Duration(milliseconds: 1000),
+                       child:
                        
-                   backgroundColor: 
-                   
-                   
-                              _controller.currentRimDimeter==dimeter?
-                   
-                           
-                              null:
-                                 
-                                    Theme.of(Get.context!).primaryColorLight
-                   
-                   ,           
-                       child: Text(dimeter.toString()),),
+                       controller.currentRimDimeter==dimeter?
+                        CircleAvatar(
+    key: Key("selected"),
+
+                         
+                                        backgroundColor: null
+                                  
+                                        
+                                        ,           
+                         child: Text(dimeter.toString()),):
+  CircleAvatar(
+    key: Key("unselected"),
+                         
+                                        backgroundColor: 
+                                        
+                                        
+                            
+                                   
+                                      Theme.of(Get.context!).primaryColorLight
+                                        
+                                        ,           
+                         child: Text(dimeter.toString()),),
+
+                     ),
                    ));
                 }),
               ),
@@ -193,14 +194,14 @@ _addWidthSlider()
                    InkWell(
                      onTap: (){
                     
-                       _controller.currentRimWidthIndex=width;
+                       controller.currentRimWidthIndex=width;
                      },
                      child: CircleAvatar(
                        
                    backgroundColor: 
                    
                    
-                              _controller.currentRimWidthIndex==width?
+                              controller.currentRimWidthIndex==width?
                    
                            
                               null:
@@ -253,12 +254,14 @@ class SearchViewController extends GetxController{
 
    set currentRimDimeter(int? dimeter)=>_currentRimDimeter?.value=dimeter!;
 
+  final currentRimWidthRangeValues =  const RangeValues(rimWidthMinimum,rimWidthMaximum).obs;
+  final currentDimeterRangeValues =  const RangeValues(rimDimeterMinimum,rimDimeterMaximum).obs;
 
-  final _currentRangeValues = const RangeValues(40, 80).obs;
+  final currentRimOffsetRangeValues =  const RangeValues(rimOffsetMinimum,rimOffsetMaximum).obs;
 
-  RangeValues get currentRangeValues=>_currentRangeValues.value;
 
-  set currentRangeValues(RangeValues values)=>_currentRangeValues.value=values;
+  final currentTyreWidthRangeValues =  const RangeValues(tyreWidthMinimum,tyreWidthMaximum).obs;
+
 
    late final RxDouble? _currentRimOffsetValue;
    double? get currentRimOffsetValue=>_currentRimOffsetValue?.value;
@@ -276,4 +279,202 @@ _initRimOffsetValues(){
 }
 
 }
+class AddSlioder extends StatelessWidget {
 
+
+
+final _controller=Get.find<SearchViewController>();
+
+   AddSlioder({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: SizedBox(
+        height:Get.height,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                
+              Flexible(
+                flex: 1,
+                  child: Obx(()=>
+                     RangeSlider(
+                              values: _controller.currentRimWidthRangeValues.value,
+                             max: rimWidthMaximum,
+                             min: rimWidthMinimum,
+                        divisions: rimWidthMaximum.toInt(),
+                              labels: RangeLabels(
+                             _controller.     currentRimWidthRangeValues.value.start.round().toString(),
+                           _controller.       currentRimWidthRangeValues.value.end.round().toString(),
+                              ),
+                              onChanged: (RangeValues values) {
+                             
+                               _controller.   currentRimWidthRangeValues.value = values;
+                          
+                               print(values);
+                                
+                              },
+                            ),
+                
+                            
+                  ),
+                ),
+                _addAvatar("rim width")
+              ],
+            ),
+      
+            SizedBox(height: 10,),
+              Row(
+                children: [
+                 _addAvatar("rim dimeter"),
+                  Flexible(flex: 1,
+                    child: Obx(()=>
+                     RangeSlider(
+                              values: _controller.currentDimeterRangeValues.value,
+                            
+                        divisions:rimDimeterMaximum.toInt(),
+                        max:rimDimeterMaximum,
+                        min: rimDimeterMinimum,
+                              labels: RangeLabels(
+                             _controller.     currentDimeterRangeValues.value.start.round().toString(),
+                           _controller.       currentDimeterRangeValues.value.end.round().toString(),
+                              ),
+                              onChanged: (RangeValues values) {
+                             
+                               _controller.   currentDimeterRangeValues.value = values;
+                          
+                               print(values);
+                                
+                              },
+                            ),
+                  
+                            
+                              ),
+                  ),
+                ],
+              ),
+                          Row(
+                            children: [
+                              Obx(()=>
+               Flexible(
+      
+                 flex: 1,
+                 child: RangeSlider(
+                          values: _controller.currentRimOffsetRangeValues.value,
+                         max: rimOffsetMaximum,
+                         min: -170,
+                  divisions: rimOffsetMaximum.toInt(),
+                          labels: RangeLabels(
+                         _controller.     currentRimOffsetRangeValues.value.start.round().toString(),
+                       _controller.       currentRimOffsetRangeValues.value.end.round().toString(),
+                          ),
+                          onChanged: (RangeValues values) {
+                         
+                           _controller.   currentRimOffsetRangeValues.value = values;
+                      
+                           print(values);
+                                
+                          },
+                        ),
+               ),
+      
+                      
+            ),
+      
+            _addAvatar("rim offset")
+                            ],
+                          ),
+      
+                    Row(
+                      children: [
+            _addAvatar("tyre width"),
+      
+                        Obx(()=>
+               Flexible(
+                 flex: 1,
+                 child: RangeSlider(
+                              values: _controller.currentTyreWidthRangeValues.value,
+                             max: tyreWidthMaximum,
+                  divisions: tyreWidthMaximum.toInt(),
+      
+                  min: tyreWidthMinimum,
+                              labels: RangeLabels(
+                             _controller.     currentTyreWidthRangeValues.value.start.round().toString(),
+                           _controller.       currentTyreWidthRangeValues.value.end.round().toString(),
+                              ),
+                              onChanged: (RangeValues values) {
+                             
+                               _controller.   currentTyreWidthRangeValues.value = values;
+                          
+                               print(values);
+                                
+                              },
+                            ),
+               ),
+      
+                          
+            ),
+      
+                      ],
+                    ),
+      
+                    SizedBox(height: 10,),
+        
+        SizedBox(
+      
+                          width: Get.width*0.9,
+                          child: TxtField(
+                            prefixIcon: Icon(Icons.search),
+                            isOutlined: true,
+                            
+                            labelText: "tyre ",),
+                        ),
+      
+                               SizedBox(height: 10,),
+      
+                        SizedBox(
+      
+                          width: Get.width*0.9,
+                          child: TxtField(
+                            prefixIcon: Icon(Icons.search),
+                            isOutlined: true,
+                            
+                            labelText: "tyre thread ",),
+                        ),
+                        SizedBox(height: 10,),
+      
+      
+                        Flexible(
+                          child: Container(
+                            
+                            width: Get.width*0.9,
+                            child: MyButton(buttonText: "Search", onTap:(){
+                          
+                              
+                            } ),
+                          ),
+                        )
+        
+          ],
+        ),
+      ),
+    );
+  }
+  Widget _addAvatar(String title){
+
+     return Flexible(
+                    flex: 0,
+                    child: CircleAvatar(
+                      radius: 40,
+                      
+                      child: Padding(
+                        padding: EdgeInsets.all(4),
+                        child: FittedBox(
+                          
+                          child: Text(title.capitalizeFirst!,style: StyledText.actorFontStyle,)),
+                      ),));
+  }
+}
