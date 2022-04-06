@@ -3,17 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:parametric_market_app/components/home_card.dart';
 import 'package:parametric_market_app/components/image_avatar.dart';
 import 'package:parametric_market_app/constants/constants.dart';
 import 'package:parametric_market_app/constants/text_styles.dart';
 import 'package:parametric_market_app/models/tyre_model.dart';
 import 'package:parametric_market_app/screens/details_view/details_view.dart';
+import 'package:parametric_market_app/screens/home/home_controller.dart';
 
 import '../../components/description_card.dart';
-import '../home/home_controller.dart';
 
-class HomeView extends StatelessWidget {
-  final _controller = Get.find<HomeController>();
+class HomeView extends GetView<HomeController> {
+
 
   @override
   Widget build(BuildContext context) {
@@ -21,85 +22,20 @@ class HomeView extends StatelessWidget {
       child: Scaffold(
         body: ListView.builder(
             padding: EdgeInsets.only(left: 4, top: 10),
-            itemCount: _controller.tyresList.length,
+            itemCount: controller.tyresList.length,
             itemBuilder: (context, index) {
-              final _tyreModel = _controller.tyresList[index];
+              final _tyreModel = controller.tyresList[index];
 
-              return addStack(_tyreModel,index);
+              return HomeViewCard(tyreModel:_tyreModel,index:index);
             }),
       ),
     );
   }
 
-  _addFavouriteIcon(TyreModel model) {
-    final index = _controller.tyresList.indexOf(model);
-
-    return Positioned(
-      right: 10,
-      top: 8,
-      child: Obx(
-        () => IconButton(
-            onPressed: () {
-              model.wheel.isFavorite = !model.wheel.isFavorite;
-              model.wheel.isFavorite
-                  ? BotToast.showText(text: "Added to favorite")
-                  : BotToast.showText(text: "Removed from favorite");
-
-              // BotToast.showCustomNotification(toastBuilder: (_){
-              //   return Icon(Icons.face,color: Colors.red,);
-              // });
-              _controller.tyresList[index] = model;
-            },
-            icon: _controller.tyresList[index].wheel.isFavorite
-                ? Icon(
-                    Icons.favorite,
-                    color: Theme.of(Get.context!).iconTheme.color,
-                  )
-                : Icon(Icons.favorite_border)),
-      ),
-    );
-  }
 
 
 
-  Widget addStack(TyreModel _tyreModel,int index) {
 
-    return Stack(
-                alignment: Alignment.centerLeft,
-                children: [
-                
-SizedBox(
-  height: 170,
-  child:   Padding(
-    //card padding
-    padding: const EdgeInsets.only(left:35,right: 10),
-    child:   SizedBox(
-      child: ListViewCard(
-
-        tagId: index.toString(),
-    
-        
-        contentPadding: EdgeInsets.only(left: 50,right: 10,top: 10,),
-        
-        tyreModel: _tyreModel,onTap: (){
-      print("kkkkkk");
-      
-        Get.to(()=>DetailsViw(heroTagId: index.toString(),),arguments: _tyreModel);
-      },),
-    ),
-  ),
-),
-                  _addFavouriteIcon(_tyreModel),
-
-                  //if no image show default one
-
-                  ImageAvatar(
-                      alignment: Alignment.centerLeft,
-                      imageUrl: _tyreModel.imageUrl ?? "images/mercury.png",
-                     ),
-                ],
-              );
-  }
 }
 
 class PhotoHero extends StatelessWidget {
@@ -167,6 +103,81 @@ class HeroAnimation extends StatelessWidget {
             }));
           },
         ),
+      ),
+    );
+  }
+}
+
+class HomeViewCard extends GetView<HomeController> {
+  final TyreModel tyreModel;
+  final int index;
+  const HomeViewCard({Key? key,required this.tyreModel,required this.index}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+                alignment: Alignment.centerLeft,
+                children: [
+                
+SizedBox(
+  height: 170,
+  child:   Padding(
+    //card padding
+    padding: const EdgeInsets.only(left:35,right: 10),
+    child:   SizedBox(
+      child: ListViewCard(
+
+        tagId: index.toString(),
+    
+        
+        contentPadding: EdgeInsets.only(left: 50,right: 10,top: 10,),
+        
+        tyreModel: tyreModel,onTap: (){
+      print("kkkkkk");
+      
+        Get.to(()=>DetailsViw(heroTagId: index.toString(),),arguments: tyreModel);
+      },),
+    ),
+  ),
+),
+                  _addFavouriteIcon(tyreModel),
+
+                  //if no image show default one
+
+                  ImageAvatar(
+                      alignment: Alignment.centerLeft,
+                      imageUrl: tyreModel.imageUrl ?? "images/mercury.png",
+                     ),
+                ],
+              );
+ 
+  }
+
+    _addFavouriteIcon(TyreModel model) {
+    final index = controller.tyresList.indexOf(model);
+
+    return Positioned(
+      right: 10,
+      top: 8,
+      child: Obx(
+        () => IconButton(
+            onPressed: () {
+              model.wheel.isFavorite = !model.wheel.isFavorite;
+              model.wheel.isFavorite
+                  ? BotToast.showText(text: "Added to favorite")
+                  : BotToast.showText(text: "Removed from favorite");
+
+              // BotToast.showCustomNotification(toastBuilder: (_){
+              //   return Icon(Icons.face,color: Colors.red,);
+              // });
+              controller.tyresList[index] = model;
+            },
+            icon: controller.tyresList[index].wheel.isFavorite
+                ? Icon(
+                    Icons.favorite,
+                    color: Theme.of(Get.context!).iconTheme.color,
+                  )
+                : Icon(Icons.favorite_border)),
       ),
     );
   }

@@ -18,7 +18,7 @@ class FavoriteView extends StatelessWidget {
             itemBuilder: (context,index){
     final _tyreModel=controller.tyresList[index];
     
-            return HomeView().addStack(_tyreModel,index);
+            return HomeViewCard(tyreModel:_tyreModel,index:index);
           }),
     );
   }

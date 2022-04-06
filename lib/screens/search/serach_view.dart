@@ -1,18 +1,13 @@
-import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:parametric_market_app/components/image_avatar.dart';
 import 'package:parametric_market_app/constants/constants.dart';
 import 'package:parametric_market_app/constants/text_styles.dart';
 import 'package:parametric_market_app/models/tyre_model.dart';
-import 'package:parametric_market_app/screens/details_view/details_view.dart';
+import 'package:parametric_market_app/screens/home/home_controller.dart';
+import 'package:parametric_market_app/screens/home/home_view.dart';
 
-import '../../components/dropdown_form_field.dart';
 import '../../components/mybutton.dart';
 import '../../components/text_field.dart';
-import '../home/home_controller.dart';
 
 
 
@@ -26,61 +21,84 @@ class SearchView extends GetView<SearchViewController> {
       appBar: AppBar(title: Text("kkk"),),
       body: Center(
         child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
+
+
+          child: 
+          Obx(()=>
+             controller.isSearching.isTrue?
+
+             controller.availableSearched.isEmpty?
+             Text("no data available"):
+
+             ListView.builder(
+               shrinkWrap: true,
+               
+               itemCount: controller.availableSearched.length,
+               itemBuilder: (context,index){
+
+               final model=controller.availableSearched[index];
+
+               return HomeViewCard(tyreModel: model, index: index);
+             },):
+          
             
-            
-            
-            Row(children: [
-            
-            
-              InkWell(
+            SizedBox(
+              child: Column(
+                children: [
+                
+                
+                
+                Row(children: [
+                
+                
+                  InkWell(
+                  
+                  onTap: (){
+                
+                    controller.isExactWidth.value=true;
+                  },
+                  child: Chip(label: Text('Less or Equal'),)),
+                
+                
+                  InkWell(
               
               onTap: (){
-            
-                controller.isExactWidth.value=true;
+                    
+                               controller.isExactWidth.value=false;
+                    
               },
-              child: Chip(label: Text('Less or Equal'),)),
-            
-            
-              InkWell(
-          
-          onTap: (){
-        
-                           controller.isExactWidth.value=false;
-        
-          },
-          child: CircleAvatar(child: Text('50'),))
-            ,
-              CircleAvatar(child: Text('60'),)
-            
-            ],),
-            
-          
-            Obx(()=>
-            
-         
-        
-        AnimatedSwitcher(
-                          transitionBuilder: (child,animation)=>SizeTransition(sizeFactor: animation,child: child,),
-          
-          
-          duration: Duration(milliseconds: 500),
-          child:    controller.isExactWidth.isTrue?
-        
-          
-          addWidthValueRow():
-        
-        AddSlioder()
-        )
-        
-        
-        
-        
-            )
+              child: CircleAvatar(child: Text('50'),))
+                ,
+                  CircleAvatar(child: Text('60'),)
+                
+                ],),
+                
               
-            ],
+                Obx(()=>
+                
+                     
+                    
+                    AnimatedSwitcher(
+                              transitionBuilder: (child,animation)=>SizeTransition(sizeFactor: animation,child: child,),
+              
+              
+              duration: Duration(milliseconds: 500),
+              child:    controller.isExactWidth.isTrue?
+                    
+              
+              addWidthValueRow():
+                    
+                    AddSlioder()
+                    )
+                    
+                    
+                    
+                    
+                )
+                  
+                ],
+              ),
+            )
           ),
         ),
       ),
@@ -237,12 +255,47 @@ class SearchView extends GetView<SearchViewController> {
 
 class SearchViewController extends GetxController{
 
+  List<TyreModel> get availableSearched=>Get.find<HomeController>().tyresList.where((model) =>model.wheel.rimWidth
+  
+  >=currentRimWidthRangeValues.value.start&&model.wheel.rimWidth<=
+  
+  currentRimWidthRangeValues.value.end
+  
+  
+   ).toList();
+    final isSearching=false.obs;
+
   @override
   void onInit() {
-
+initSliders();
     _initRimOffsetValues();
     _currentRimOffsetValue=rimOffsetValues[0].obs;
     super.onInit();
+  }
+
+  initSliders(){
+
+
+   currentRimWidthRangeValues =  const RangeValues(rimWidthMinimum,rimWidthMaximum).obs;
+   currentDimeterRangeValues=   const RangeValues(rimDimeterMinimum,rimDimeterMaximum).obs;
+
+   currentRimOffsetRangeValues =   const RangeValues(rimOffsetMinimum,rimOffsetMaximum).obs;
+
+
+   currentTyreWidthRangeValues =  const RangeValues(tyreWidthMinimum,tyreWidthMaximum).obs;
+
+  }
+   restSlider(){
+
+
+   currentRimWidthRangeValues.value=  const RangeValues(rimWidthMinimum,rimWidthMaximum);
+   currentDimeterRangeValues.value=   const RangeValues(rimDimeterMinimum,rimDimeterMaximum);
+
+   currentRimOffsetRangeValues.value=   const RangeValues(rimOffsetMinimum,rimOffsetMaximum);
+
+
+   currentTyreWidthRangeValues.value =  const RangeValues(tyreWidthMinimum,tyreWidthMaximum);
+
   }
 
    final RxDouble? _currentRimWidthIndex=4.0.obs;
@@ -254,13 +307,13 @@ class SearchViewController extends GetxController{
 
    set currentRimDimeter(int? dimeter)=>_currentRimDimeter?.value=dimeter!;
 
-  final currentRimWidthRangeValues =  const RangeValues(rimWidthMinimum,rimWidthMaximum).obs;
-  final currentDimeterRangeValues =  const RangeValues(rimDimeterMinimum,rimDimeterMaximum).obs;
+  late final Rx<RangeValues> currentRimWidthRangeValues ;
+  late final Rx<RangeValues>  currentDimeterRangeValues  ;
 
-  final currentRimOffsetRangeValues =  const RangeValues(rimOffsetMinimum,rimOffsetMaximum).obs;
+  late final Rx<RangeValues>  currentRimOffsetRangeValues ;
 
 
-  final currentTyreWidthRangeValues =  const RangeValues(tyreWidthMinimum,tyreWidthMaximum).obs;
+  late final Rx<RangeValues>  currentTyreWidthRangeValues;
 
 
    late final RxDouble? _currentRimOffsetValue;
@@ -279,11 +332,11 @@ _initRimOffsetValues(){
 }
 
 }
-class AddSlioder extends StatelessWidget {
+class AddSlioder extends GetView<SearchViewController> {
 
 
 
-final _controller=Get.find<SearchViewController>();
+final controller=Get.find<SearchViewController>();
 
    AddSlioder({Key? key}) : super(key: key);
 
@@ -291,7 +344,6 @@ final _controller=Get.find<SearchViewController>();
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: SizedBox(
-        height:Get.height,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -302,17 +354,17 @@ final _controller=Get.find<SearchViewController>();
                 flex: 1,
                   child: Obx(()=>
                      RangeSlider(
-                              values: _controller.currentRimWidthRangeValues.value,
+                              values: controller.currentRimWidthRangeValues.value,
                              max: rimWidthMaximum,
                              min: rimWidthMinimum,
                         divisions: rimWidthMaximum.toInt(),
                               labels: RangeLabels(
-                             _controller.     currentRimWidthRangeValues.value.start.round().toString(),
-                           _controller.       currentRimWidthRangeValues.value.end.round().toString(),
+                             controller.     currentRimWidthRangeValues.value.start.round().toString(),
+                           controller.       currentRimWidthRangeValues.value.end.round().toString(),
                               ),
                               onChanged: (RangeValues values) {
                              
-                               _controller.   currentRimWidthRangeValues.value = values;
+                               controller.   currentRimWidthRangeValues.value = values;
                           
                                print(values);
                                 
@@ -333,18 +385,18 @@ final _controller=Get.find<SearchViewController>();
                   Flexible(flex: 1,
                     child: Obx(()=>
                      RangeSlider(
-                              values: _controller.currentDimeterRangeValues.value,
+                              values: controller.currentDimeterRangeValues.value,
                             
                         divisions:rimDimeterMaximum.toInt(),
                         max:rimDimeterMaximum,
                         min: rimDimeterMinimum,
                               labels: RangeLabels(
-                             _controller.     currentDimeterRangeValues.value.start.round().toString(),
-                           _controller.       currentDimeterRangeValues.value.end.round().toString(),
+                             controller.     currentDimeterRangeValues.value.start.round().toString(),
+                           controller.       currentDimeterRangeValues.value.end.round().toString(),
                               ),
                               onChanged: (RangeValues values) {
                              
-                               _controller.   currentDimeterRangeValues.value = values;
+                               controller.   currentDimeterRangeValues.value = values;
                           
                                print(values);
                                 
@@ -363,17 +415,17 @@ final _controller=Get.find<SearchViewController>();
       
                  flex: 1,
                  child: RangeSlider(
-                          values: _controller.currentRimOffsetRangeValues.value,
+                          values: controller.currentRimOffsetRangeValues.value,
                          max: rimOffsetMaximum,
                          min: -170,
                   divisions: rimOffsetMaximum.toInt(),
                           labels: RangeLabels(
-                         _controller.     currentRimOffsetRangeValues.value.start.round().toString(),
-                       _controller.       currentRimOffsetRangeValues.value.end.round().toString(),
+                         controller.     currentRimOffsetRangeValues.value.start.round().toString(),
+                       controller.       currentRimOffsetRangeValues.value.end.round().toString(),
                           ),
                           onChanged: (RangeValues values) {
                          
-                           _controller.   currentRimOffsetRangeValues.value = values;
+                           controller.   currentRimOffsetRangeValues.value = values;
                       
                            print(values);
                                 
@@ -396,18 +448,18 @@ final _controller=Get.find<SearchViewController>();
                Flexible(
                  flex: 1,
                  child: RangeSlider(
-                              values: _controller.currentTyreWidthRangeValues.value,
+                              values: controller.currentTyreWidthRangeValues.value,
                              max: tyreWidthMaximum,
                   divisions: tyreWidthMaximum.toInt(),
       
                   min: tyreWidthMinimum,
                               labels: RangeLabels(
-                             _controller.     currentTyreWidthRangeValues.value.start.round().toString(),
-                           _controller.       currentTyreWidthRangeValues.value.end.round().toString(),
+                             controller.     currentTyreWidthRangeValues.value.start.round().toString(),
+                           controller.       currentTyreWidthRangeValues.value.end.round().toString(),
                               ),
                               onChanged: (RangeValues values) {
                              
-                               _controller.   currentTyreWidthRangeValues.value = values;
+                               controller.   currentTyreWidthRangeValues.value = values;
                           
                                print(values);
                                 
@@ -447,14 +499,38 @@ final _controller=Get.find<SearchViewController>();
                         SizedBox(height: 10,),
       
       
-                        Flexible(
-                          child: Container(
-                            
-                            width: Get.width*0.9,
-                            child: MyButton(buttonText: "Search", onTap:(){
-                          
+                        SizedBox(
+                          width: Get.width*0.9,
+                          child: Row(
+                            children: [
+                        
+                          Expanded(
+                            child: Container(
                               
-                            } ),
+                              child: MyButton(
+                                icon: Icon(Icons.search),
+                                
+                                buttonText: "Search", onTap:(){
+                                  controller.isSearching.value=true;
+                            
+                                
+                              } ),
+                            ),
+                          ),
+                          SizedBox(width: 10,),
+                              Expanded(
+                                child: Container(
+                                  
+                                  child: MyButton(
+                                    icon: Icon(Icons.clear),
+                                    buttonText: "clear", onTap:(){
+
+                                controller.restSlider();
+                                    
+                                  } ),
+                                ),
+                              ),
+                            ],
                           ),
                         )
         
@@ -468,7 +544,7 @@ final _controller=Get.find<SearchViewController>();
      return Flexible(
                     flex: 0,
                     child: CircleAvatar(
-                      radius: 40,
+                      radius: 30,
                       
                       child: Padding(
                         padding: EdgeInsets.all(4),
