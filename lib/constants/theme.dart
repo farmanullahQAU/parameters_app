@@ -26,6 +26,8 @@ inactiveTrackColor:orangeDarkPrimaryColor.withAlpha(100),
 
       
         titleSmall: TextStyle(color: Color.fromARGB(255, 209, 14, 46))),
+
+        appBarTheme: AppBarTheme(backgroundColor: orangeDarkPrimaryColor),
     primaryColor: orangeDarkPrimaryColor,
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: orangeDarkPrimaryColor,

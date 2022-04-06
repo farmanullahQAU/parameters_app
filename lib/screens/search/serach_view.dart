@@ -18,88 +18,95 @@ class SearchView extends GetView<SearchViewController> {
   Widget build(BuildContext context) {
     
     return Scaffold(
-      appBar: AppBar(title: Text("kkk"),),
-      body: Center(
-        child: SingleChildScrollView(
 
+      floatingActionButton: FloatingActionButton(onPressed: (){
 
-          child: 
-          Obx(()=>
-             controller.isSearching.isTrue?
-
-             controller.availableSearched.isEmpty?
-             Text("no data available"):
-
-             ListView.builder(
-               shrinkWrap: true,
-               
-               itemCount: controller.availableSearched.length,
-               itemBuilder: (context,index){
-
-               final model=controller.availableSearched[index];
-
-               return HomeViewCard(tyreModel: model, index: index);
-             },):
-          
+        controller.isExactWidth.value=!controller.isExactWidth.value;
+      },child:
+      
+      
+       Obx(()=>
+       AnimatedSwitcher(
+           
+                            transitionBuilder: (child,animation)=>ScaleTransition(scale: animation,child: child,),
+           
+           duration: Duration(milliseconds: 500),
+           child:
+           
+           controller.isExactWidth.isTrue?
+       
+       
+            Center(
+              
+              key: Key("1"),
+              child: Icon(Icons.filter_1)):
             
-            SizedBox(
-              child: Column(
-                children: [
-                
-                
-                
-                Row(children: [
-                
-                
-                  InkWell(
-                  
-                  onTap: (){
-                
-                    controller.isExactWidth.value=true;
-                  },
-                  child: Chip(label: Text('Less or Equal'),)),
-                
-                
-                  InkWell(
-              
-              onTap: (){
-                    
-                               controller.isExactWidth.value=false;
-                    
-              },
-              child: CircleAvatar(child: Text('50'),))
-                ,
-                  CircleAvatar(child: Text('60'),)
-                
-                ],),
-                
-              
-                Obx(()=>
-                
-                     
-                    
-                    AnimatedSwitcher(
-                              transitionBuilder: (child,animation)=>SizeTransition(sizeFactor: animation,child: child,),
-              
-              
-              duration: Duration(milliseconds: 500),
-              child:    controller.isExactWidth.isTrue?
-                    
-              
-              addWidthValueRow():
-                    
-                    AddSlioder()
-                    )
-                    
-                    
-                    
-                    
-                )
-                  
-                ],
-              ),
-            )
+             Center(
+               key: Key("2"),
+               child: Icon(Icons.search))),
+       )
           ),
+    
+       appBar: AppBar(
+
+         actions:
+         
+          [
+         Obx(()=>
+  controller.isSearching.isTrue?
+              
+              
+              IconButton(onPressed: ()=>controller.isSearching.value=false, icon: Icon(Icons.clear)):Container(),
+         )],
+         
+         backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+         
+         title: Text("search"),),
+      body: SingleChildScrollView(
+    
+    
+        child: 
+        Obx(()=>
+           controller.isSearching.isTrue?
+    
+           controller.availableSearched.isEmpty?
+           Text("no data available"):
+    
+           ListView.builder(
+             shrinkWrap: true,
+             
+             itemCount: controller.availableSearched.length,
+             itemBuilder: (context,index){
+    
+             final model=controller.availableSearched[index];
+    
+             return HomeViewCard(tyreModel: model, index: index);
+           },):
+        
+    
+        
+          
+          Obx(()=>
+          
+               
+              
+              AnimatedSwitcher(
+                        transitionBuilder: (child,animation)=>SizeTransition(sizeFactor: animation,child: child,),
+          
+          
+          duration: Duration(milliseconds: 500),
+          child:    controller.isExactWidth.isTrue?
+              
+          
+          addWidthValueRow():
+              
+              AddSlioder()
+              )
+              
+              
+              
+              
+          )
         ),
       ),
     );
@@ -235,8 +242,19 @@ class SearchView extends GetView<SearchViewController> {
           ),
         ),
      
-           
-    
+        SizedBox(height: 20,),   
+    SizedBox(
+      width: Get.width*0.9,
+                              
+                              child: MyButton(
+                                icon: Icon(Icons.search),
+                                
+                                buttonText: "Search", onTap:(){
+                                  controller.isSearching.value=true;
+                            
+                                
+                              } ),
+                            ),
       ],
     );
 
