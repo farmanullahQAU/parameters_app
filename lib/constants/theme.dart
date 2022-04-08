@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AppTheme {
-  static final blueDarkPrimaryColor = Color.fromARGB(255, 8, 135, 238);
+  static final blueDarkPrimaryColor = const Color.fromARGB(255, 8, 135, 238);
   static final orangeDarkPrimaryColor = Colors.orange.shade900;
 
   static final blackThemePrimaryColor = Colors.black12;
@@ -22,7 +22,7 @@ inactiveTrackColor:orangeDarkPrimaryColor.withAlpha(100),
     
     
     ),
-    textTheme: TextTheme(
+    textTheme: const TextTheme(
 
       
         titleSmall: TextStyle(color: Color.fromARGB(255, 209, 14, 46))),
@@ -36,8 +36,8 @@ inactiveTrackColor:orangeDarkPrimaryColor.withAlpha(100),
         BottomNavigationBarThemeData(selectedItemColor: orangeDarkPrimaryColor),
     outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
-      textStyle: TextStyle(color: Colors.white),
-      padding: EdgeInsets.symmetric(vertical: 15),
+      textStyle: const TextStyle(color: Colors.white),
+      padding: const EdgeInsets.symmetric(vertical: 15),
       shape: RoundedRectangleBorder(
         borderRadius: new BorderRadius.circular(10.0),
       ),
@@ -55,8 +55,8 @@ inactiveTrackColor:orangeDarkPrimaryColor.withAlpha(100),
         BottomNavigationBarThemeData(selectedItemColor: blueDarkPrimaryColor),
     outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
-      textStyle: TextStyle(color: Colors.white),
-      padding: EdgeInsets.symmetric(vertical: 15),
+      textStyle: const TextStyle(color: Colors.white),
+      padding: const EdgeInsets.symmetric(vertical: 15),
       shape: RoundedRectangleBorder(
         borderRadius: new BorderRadius.circular(10.0),
       ),
@@ -69,14 +69,14 @@ inactiveTrackColor:orangeDarkPrimaryColor.withAlpha(100),
     outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
       backgroundColor: Colors.black,
-      textStyle: TextStyle(color: Colors.white),
-      padding: EdgeInsets.symmetric(vertical: 15),
+      textStyle: const TextStyle(color: Colors.white),
+      padding: const EdgeInsets.symmetric(vertical: 15),
       shape: RoundedRectangleBorder(
         borderRadius: new BorderRadius.circular(10.0),
       ),
     )),
 
-    sliderTheme: SliderThemeData(
+    sliderTheme: const SliderThemeData(
        
   activeTrackColor: Colors.cyan,
 
@@ -88,9 +88,9 @@ inactiveTrackColor: Colors.red   ,thumbColor: Colors.white
     dividerColor: Colors.green.shade700,
     brightness: Brightness.dark,
 
-    textTheme: TextTheme(
+    textTheme: const TextTheme(
         titleLarge: TextStyle(color: Colors.white),
-        titleSmall: TextStyle(color: Color.fromARGB(255, 133, 245, 5))),
+        titleSmall: const TextStyle(color: Color.fromARGB(255, 133, 245, 5))),
     primaryColor: blackThemePrimaryColor,
 
     // ),

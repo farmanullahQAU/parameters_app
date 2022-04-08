@@ -61,7 +61,7 @@ class SearchView extends GetView<SearchViewController> {
          
          backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
          
-         title: Text("search"),),
+         title: Text("filter"),),
       body: SingleChildScrollView(
     
     
@@ -273,14 +273,21 @@ class SearchView extends GetView<SearchViewController> {
 
 class SearchViewController extends GetxController{
 
-  List<TyreModel> get availableSearched=>Get.find<HomeController>().tyresList.where((model) =>model.wheel.rimWidth
+  List<TyreModel> get availableSearched=>Get.find<HomeController>().tyresList.where((model) =>((model.wheel.rimWidth
   
-  >=currentRimWidthRangeValues.value.start&&model.wheel.rimWidth<=
+  >=currentRimWidthRangeValues.value.start)&&(model.wheel.rimWidth<=
   
-  currentRimWidthRangeValues.value.end
+  currentRimWidthRangeValues.value.end))
+
+
+
   
   
-   ).toList();
+   ).where((model) => (model.wheel.rimDimeter!
+  
+                    >=currentDimeterRangeValues.value.start)&&(model.wheel.rimDimeter!<=
+  
+  currentDimeterRangeValues.value.end)).toList();
     final isSearching=false.obs;
 
   @override

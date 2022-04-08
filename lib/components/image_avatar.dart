@@ -12,7 +12,7 @@ class ImageAvatar extends StatelessWidget {
       alignment: this.alignment!,
       child: CircleAvatar(
     backgroundColor: Theme.of(context).dividerColor,
-        radius: 43,
+        radius: 44,
         child: CircleAvatar(
           radius: 40,
           

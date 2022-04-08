@@ -154,7 +154,7 @@ SizedBox(
   }
 
     _addFavouriteIcon(TyreModel model) {
-    final index = controller.tyresList.indexOf(model);
+ 
 
     return Positioned(
       right: 10,
@@ -172,13 +172,15 @@ SizedBox(
               // });
               controller.tyresList[index] = model;
             },
-            icon: controller.tyresList[index].wheel.isFavorite
-                ? Icon(
-                    Icons.favorite,
-                    color: Theme.of(Get.context!).iconTheme.color,
-                  )
-                : Icon(Icons.favorite_border)),
-      ),
+            icon: 
+              controller.tyresList[index].wheel.isFavorite==true
+                  ? Icon(
+                      Icons.favorite,
+                      color: Theme.of(Get.context!).iconTheme.color,
+                    )
+                  : const Icon(Icons.favorite_border),
+            )),
+   
     );
   }
 }

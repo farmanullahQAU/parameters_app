@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_share_me/flutter_share_me.dart';
@@ -27,23 +29,39 @@ class DetailsViw extends StatelessWidget{
 
        
        body: Stack(
+         alignment: Alignment.topCenter,
          children: [
-           Container(
-             margin: EdgeInsets.only(top: 50),
-             child: ListViewCard(
-                      tagId: heroTagId,
-               
-                contentPadding: EdgeInsets.only(left: 10,right: 10,top: 30,),
-               
-               onTap: ()=>Get.back(),tyreModel: _tyreModel,),
+           Stack(
+             alignment: Alignment.bottomCenter,
+             children: [
+               RepaintBoundary(
+key: _controller.genKey,
 
+                 child: Container(
+                   margin: EdgeInsets.only(top: 50),
+                   height: 400,
+                   child: ListViewCard(
+                            tagId: heroTagId,
+                     
+                      contentPadding: EdgeInsets.only(left: 10,right: 10,top: 30,),
+                     
+                     onTap: ()=>Get.back(),tyreModel: _tyreModel,),
+               
+               
+                 ),
+               ),
+                         _addSocialButtons()
 
+             ],
            ),
 
            ImageAvatar(  
              
              
-                         imageUrl: _tyreModel.imageUrl ?? "images/mercury.png", alignment: Alignment.topCenter)
+                         imageUrl: _tyreModel.imageUrl ?? "images/mercury.png", alignment: Alignment.topCenter),
+        
+      
+        
          ],
        )
      
@@ -178,14 +196,14 @@ class DetailsViw extends StatelessWidget{
   }
 
 
-  _addSocialButtons(){
+  Widget _addSocialButtons(){
 
 
     return ButtonBar(children: [
       IconButton(
-
-  icon: Icon(Icons.chat,size: 40,),
- onPressed: (){}),
+      
+      icon: Icon(Icons.chat,size: 40,),
+       onPressed: (){}),
 
 IconButton(
 
@@ -205,7 +223,6 @@ MyButton(
   icon: Icon(Icons.whatsapp),
   buttonText: "whatsapp", onTap: () async {
 final imageFile=await   _controller.takePicture();
-
         final FlutterShareMe flutterShareMe = FlutterShareMe();
 
 
@@ -220,15 +237,17 @@ final imageFile=await   _controller.takePicture();
 
     ],);
   }
-  _addImageTumbnail(String imageUrl,BuildContext context){
 
- return CircleAvatar(
-backgroundColor: Theme.of(context).dividerColor,
-   radius: 43,
-   child: CircleAvatar(
-     radius: 40,
-     
-     child:Image.asset(imageUrl,fit: BoxFit.cover,) ),
- );
 }
+class PreviewPage extends StatelessWidget {
+  File? file;
+   PreviewPage({Key? key,this.file}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+
+      child: Center(child:Image.file(file!)),
+    );
+  }
 }

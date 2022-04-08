@@ -40,15 +40,3 @@ return file!;
 }
 }
 
-class PreviewPage extends StatelessWidget {
-  File? file;
-   PreviewPage({Key? key,this.file}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-
-      child: Center(child:Image.file(file!)),
-    );
-  }
-}

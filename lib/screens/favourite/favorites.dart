@@ -13,12 +13,13 @@ class FavoriteView extends StatelessWidget {
     return Obx(()=>
        ListView.builder(
             
-            itemCount: controller.tyresList.where((model) =>model.wheel.isFavorite==true ).length,
+            itemCount: controller.tyresList.length,
             
             itemBuilder: (context,index){
     final _tyreModel=controller.tyresList[index];
+
     
-            return HomeViewCard(tyreModel:_tyreModel,index:index);
+            return _tyreModel.wheel.isFavorite==true? HomeViewCard(tyreModel:_tyreModel,index:index):Container();
           }),
     );
   }

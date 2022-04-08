@@ -17,19 +17,19 @@ List<TyreModel> get tyresList=>_tyresList;
     _tyresList=[
 
 
-      TyreModel(
+      // TyreModel(
         
-        description: "Perfect condition 55x76 rim for sale , cash talk no low ballers. PM, call or whatsapp, price negiotiable. bla bla bla.....",
+      //   description: "Perfect condition 55x76 rim for sale , cash talk no low ballers. PM, call or whatsapp, price negiotiable. bla bla bla.....",
         
-        wheel: WheelModel(
+      //   wheel: WheelModel(
 
-         price: 325, 
+      //    price: 325, 
 
-          condition: "new",
+      //     condition: "new",
           
           
-          shortDescription: "polished",
-          rimOffset: 22, rimWidth: 55,rimDimeter: 76), type: "Rim", tyreWidth: 34),
+      //     shortDescription: "polished",
+      //     rimOffset: 22, rimWidth: 55,rimDimeter: 76), type: "Rim", tyreWidth: 34),
 
             TyreModel(
              description: "Perfect condition 83x12 rim for sale , cash talk no low ballers. PM, call or whatsapp, price negiotiable. bla bla bla.....",
@@ -53,7 +53,7 @@ List<TyreModel> get tyresList=>_tyresList;
 
           
           shortDescription: "Polished",
-          rimOffset: 47, rimWidth: 34,rimDimeter: 30), type: "Rim", tyreWidth: 34),
+          rimOffset: 47, rimWidth: 10,rimDimeter: 15), type: "Rim", tyreWidth: 11),
             TyreModel(
         description: "Short offering descriptions3 goes here....",
         
