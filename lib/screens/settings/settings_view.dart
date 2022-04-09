@@ -33,15 +33,15 @@ class SettingsView extends StatelessWidget {
                              ),
                  ),
  ),
- IconButton(
+//  IconButton(
 
-   onPressed: (){
+//    onPressed: (){
 
-    Get.changeTheme(AppTheme.orangeTheme);
+//     Get.changeTheme(AppTheme.orangeTheme);
 
-   },
-   icon: Text("kkkkk")
- ),
+//    },
+//    icon: Text("kkkkk")
+//  ),
       ],),
     ));
   }

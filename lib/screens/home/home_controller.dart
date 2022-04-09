@@ -105,7 +105,7 @@ List<TyreModel> get tyresList=>_tyresList;
           condition: "new",
           
           
-          rimOffset: 4, rimWidth: 43,rimDimeter: 22), type: "RIM", tyreWidth: 85),
+          rimOffset: 4, rimWidth: 8,rimDimeter: 22), type: "RIM", tyreWidth: 85),
           TyreModel(
         description: "Short offering descriptions3 goes here....",
         
@@ -115,7 +115,52 @@ List<TyreModel> get tyresList=>_tyresList;
           
           condition: "new",
           
-          rimOffset: 33, rimWidth: 18,rimDimeter: 90), type: "TYRE", tyreWidth: 35),
+          rimOffset: 33, rimWidth: 10,rimDimeter: 16), type: "TYRE", tyreWidth: 35),
+
+                TyreModel(
+        description: "Short offering descriptions3 goes here....",
+        
+        wheel: WheelModel(
+
+         price: 876, 
+          
+          condition: "new",
+          
+          rimOffset: 23, rimWidth: 12,rimDimeter: 15), type: "TYRE", tyreWidth: 9),
+                TyreModel(
+        description: "Short offering descriptions3 goes here....",
+        
+        wheel: WheelModel(
+
+         price: 999, 
+          
+          condition: "new",
+          
+          rimOffset: 54, rimWidth: 11,rimDimeter: 18), type: "TYRE", tyreWidth: 67),
+
+
+              TyreModel(
+        description: "Short offering descriptions3 goes here....",
+        
+        wheel: WheelModel(
+
+         price: 1235, 
+          
+          condition: "new",
+          
+          rimOffset: 8, rimWidth: 9,rimDimeter: 22), type: "TYRE", tyreWidth: 56),
+
+
+              TyreModel(
+        description: "Short offering descriptions3 goes here....",
+        
+        wheel: WheelModel(
+
+         price: 1235, 
+          
+          condition: "new",
+          
+          rimOffset: 34, rimWidth: 11,rimDimeter: 12), type: "TYRE", tyreWidth: 97),
         
     ].obs;
     super.onInit();

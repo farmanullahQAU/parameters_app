@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class MyButton extends StatelessWidget {
-  Function() onTap;
-  Color? primary;
+    Function() onTap;
+    Color? primary;
 
-  final String buttonText;
+    String buttonText;
 Widget? icon;
-  MyButton({required this.buttonText, required this.onTap,this.icon,this.primary});
+ MyButton({Key? key, required this.buttonText, required this.onTap,this.icon,this.primary}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
@@ -20,7 +20,7 @@ Widget? icon;
             ElevatedButton.styleFrom(
               
 
-shape:  StadiumBorder(),
+shape:  const StadiumBorder(),
 
 
               

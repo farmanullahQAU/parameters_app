@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:parametric_market_app/components/no_data_found.dart';
 import 'package:parametric_market_app/constants/constants.dart';
 import 'package:parametric_market_app/constants/text_styles.dart';
-import 'package:parametric_market_app/models/tyre_model.dart';
-import 'package:parametric_market_app/screens/home/home_controller.dart';
 import 'package:parametric_market_app/screens/home/home_view.dart';
+import 'package:parametric_market_app/screens/search/search_view_controller.dart';
 
 import '../../components/mybutton.dart';
 import '../../components/text_field.dart';
@@ -30,20 +30,20 @@ class SearchView extends GetView<SearchViewController> {
            
                             transitionBuilder: (child,animation)=>ScaleTransition(scale: animation,child: child,),
            
-           duration: Duration(milliseconds: 500),
+           duration: const Duration(milliseconds: 500),
            child:
            
            controller.isExactWidth.isTrue?
        
        
-            Center(
+            const Center(
               
-              key: Key("1"),
-              child: Icon(Icons.filter_1)):
+              key: const Key("1"),
+              child: const Icon(Icons.filter_1)):
             
-             Center(
-               key: Key("2"),
-               child: Icon(Icons.search))),
+             const Center(
+               key: const Key("2"),
+               child: const Icon(Icons.search))),
        )
           ),
     
@@ -56,12 +56,12 @@ class SearchView extends GetView<SearchViewController> {
   controller.isSearching.isTrue?
               
               
-              IconButton(onPressed: ()=>controller.isSearching.value=false, icon: Icon(Icons.clear)):Container(),
+              IconButton(onPressed: ()=>controller.isSearching.value=false, icon: const Icon(Icons.clear)):Container(),
          )],
          
          backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
          
-         title: Text("filter"),),
+         title: const Text("filter"),),
       body: SingleChildScrollView(
     
     
@@ -70,7 +70,7 @@ class SearchView extends GetView<SearchViewController> {
            controller.isSearching.isTrue?
     
            controller.availableSearched.isEmpty?
-           Text("no data available"):
+         const Center(child: ShowStatus(path: 'images/lottie/no_data.json')):
     
            ListView.builder(
              shrinkWrap: true,
@@ -94,7 +94,7 @@ class SearchView extends GetView<SearchViewController> {
                         transitionBuilder: (child,animation)=>SizeTransition(sizeFactor: animation,child: child,),
           
           
-          duration: Duration(milliseconds: 500),
+          duration: const Duration(milliseconds: 500),
           child:    controller.isExactWidth.isTrue?
               
           
@@ -118,7 +118,7 @@ class SearchView extends GetView<SearchViewController> {
   Widget
   addWidthValueRow() {
     return Column(
-      key: Key("1"),
+      key: const Key("1"),
       children: [
         SizedBox(
           height: 60,
@@ -128,7 +128,7 @@ class SearchView extends GetView<SearchViewController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-         Text(rimDimeter),
+         const Text(rimDimeter),
 
               Expanded(
                 child: ListView.builder(
@@ -154,12 +154,12 @@ class SearchView extends GetView<SearchViewController> {
                      },
                      child: AnimatedSwitcher(
                       //  transitionBuilder: (child,animation)=>SizeTransition(sizeFactor: animation,child: child,),
-                       duration: Duration(milliseconds: 1000),
+                       duration: const Duration(milliseconds: 1000),
                        child:
                        
                        controller.currentRimDimeter==dimeter?
                         CircleAvatar(
-    key: Key("selected"),
+    key: const Key("selected"),
 
                          
                                         backgroundColor: null
@@ -168,7 +168,7 @@ class SearchView extends GetView<SearchViewController> {
                                         ,           
                          child: Text(dimeter.toString()),):
   CircleAvatar(
-    key: Key("unselected"),
+    key: const Key("unselected"),
                          
                                         backgroundColor: 
                                         
@@ -198,7 +198,7 @@ class SearchView extends GetView<SearchViewController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
 
-              Text(rimWidth),
+              const Text(rimWidth),
               Expanded(
                 child: ListView.builder(
                   
@@ -242,12 +242,12 @@ class SearchView extends GetView<SearchViewController> {
           ),
         ),
      
-        SizedBox(height: 20,),   
+        const SizedBox(height: 20,),   
     SizedBox(
       width: Get.width*0.9,
                               
                               child: MyButton(
-                                icon: Icon(Icons.search),
+                                icon: const Icon(Icons.search),
                                 
                                 buttonText: "Search", onTap:(){
                                   controller.isSearching.value=true;
@@ -271,92 +271,12 @@ class SearchView extends GetView<SearchViewController> {
 
 
 
-class SearchViewController extends GetxController{
-
-  List<TyreModel> get availableSearched=>Get.find<HomeController>().tyresList.where((model) =>((model.wheel.rimWidth
-  
-  >=currentRimWidthRangeValues.value.start)&&(model.wheel.rimWidth<=
-  
-  currentRimWidthRangeValues.value.end))
 
 
 
-  
-  
-   ).where((model) => (model.wheel.rimDimeter!
-  
-                    >=currentDimeterRangeValues.value.start)&&(model.wheel.rimDimeter!<=
-  
-  currentDimeterRangeValues.value.end)).toList();
-    final isSearching=false.obs;
-
-  @override
-  void onInit() {
-initSliders();
-    _initRimOffsetValues();
-    _currentRimOffsetValue=rimOffsetValues[0].obs;
-    super.onInit();
-  }
-
-  initSliders(){
 
 
-   currentRimWidthRangeValues =  const RangeValues(rimWidthMinimum,rimWidthMaximum).obs;
-   currentDimeterRangeValues=   const RangeValues(rimDimeterMinimum,rimDimeterMaximum).obs;
 
-   currentRimOffsetRangeValues =   const RangeValues(rimOffsetMinimum,rimOffsetMaximum).obs;
-
-
-   currentTyreWidthRangeValues =  const RangeValues(tyreWidthMinimum,tyreWidthMaximum).obs;
-
-  }
-   restSlider(){
-
-
-   currentRimWidthRangeValues.value=  const RangeValues(rimWidthMinimum,rimWidthMaximum);
-   currentDimeterRangeValues.value=   const RangeValues(rimDimeterMinimum,rimDimeterMaximum);
-
-   currentRimOffsetRangeValues.value=   const RangeValues(rimOffsetMinimum,rimOffsetMaximum);
-
-
-   currentTyreWidthRangeValues.value =  const RangeValues(tyreWidthMinimum,tyreWidthMaximum);
-
-  }
-
-   final RxDouble? _currentRimWidthIndex=4.0.obs;
-   double? get currentRimWidthIndex=>_currentRimWidthIndex?.value;
-
-   set currentRimWidthIndex(double? index)=>_currentRimWidthIndex?.value=index!;
-   final RxInt? _currentRimDimeter=12.obs;
-   int? get currentRimDimeter=>_currentRimDimeter?.value;
-
-   set currentRimDimeter(int? dimeter)=>_currentRimDimeter?.value=dimeter!;
-
-  late final Rx<RangeValues> currentRimWidthRangeValues ;
-  late final Rx<RangeValues>  currentDimeterRangeValues  ;
-
-  late final Rx<RangeValues>  currentRimOffsetRangeValues ;
-
-
-  late final Rx<RangeValues>  currentTyreWidthRangeValues;
-
-
-   late final RxDouble? _currentRimOffsetValue;
-   double? get currentRimOffsetValue=>_currentRimOffsetValue?.value;
-   set currentRimOffsetValue(double? offset)=>_currentRimOffsetValue?.value=offset!;
-
-
-  final isExactWidth=false.obs;
-_initRimOffsetValues(){
-
-  for(int i=-70;i<=130;i++)
-  {
-
-    rimOffsetValues.add(i.toDouble());
-  }
-}
-
-}
 class AddSlioder extends GetView<SearchViewController> {
 
 
@@ -403,7 +323,7 @@ final controller=Get.find<SearchViewController>();
               ],
             ),
       
-            SizedBox(height: 10,),
+            const SizedBox(height: 10,),
               Row(
                 children: [
                  _addAvatar("rim dimeter"),
@@ -498,30 +418,30 @@ final controller=Get.find<SearchViewController>();
                       ],
                     ),
       
-                    SizedBox(height: 10,),
+                    const SizedBox(height: 10,),
         
         SizedBox(
       
                           width: Get.width*0.9,
                           child: TxtField(
-                            prefixIcon: Icon(Icons.search),
+                            prefixIcon: const Icon(Icons.search),
                             isOutlined: true,
                             
                             labelText: "tyre ",),
                         ),
       
-                               SizedBox(height: 10,),
+                               const SizedBox(height: 10,),
       
                         SizedBox(
       
                           width: Get.width*0.9,
                           child: TxtField(
-                            prefixIcon: Icon(Icons.search),
+                            prefixIcon: const Icon(Icons.search),
                             isOutlined: true,
                             
                             labelText: "tyre thread ",),
                         ),
-                        SizedBox(height: 10,),
+                        const SizedBox(height: 10,),
       
       
                         SizedBox(
@@ -533,7 +453,7 @@ final controller=Get.find<SearchViewController>();
                             child: Container(
                               
                               child: MyButton(
-                                icon: Icon(Icons.search),
+                                icon: const Icon(Icons.search),
                                 
                                 buttonText: "Search", onTap:(){
                                   controller.isSearching.value=true;
@@ -542,12 +462,12 @@ final controller=Get.find<SearchViewController>();
                               } ),
                             ),
                           ),
-                          SizedBox(width: 10,),
+                          const SizedBox(width: 10,),
                               Expanded(
                                 child: Container(
                                   
                                   child: MyButton(
-                                    icon: Icon(Icons.clear),
+                                    icon: const Icon(Icons.clear),
                                     buttonText: "clear", onTap:(){
 
                                 controller.restSlider();
@@ -572,7 +492,7 @@ final controller=Get.find<SearchViewController>();
                       radius: 30,
                       
                       child: Padding(
-                        padding: EdgeInsets.all(4),
+                        padding: const EdgeInsets.all(4),
                         child: FittedBox(
                           
                           child: Text(title.capitalizeFirst!,style: StyledText.actorFontStyle,)),

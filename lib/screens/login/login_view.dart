@@ -1,166 +1,176 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:parametric_market_app/components/text_field.dart';
 import 'package:parametric_market_app/constants/constants.dart';
-import 'package:parametric_market_app/screens/home/home_controller.dart';
-import 'package:parametric_market_app/screens/home/home_view.dart';
 import 'package:parametric_market_app/screens/signup/signup_view.dart';
 import 'package:parametric_market_app/constants/text_styles.dart';
 import 'package:parametric_market_app/screens/tabs/tabs_controller.dart';
 
 import '../../components/mybutton.dart';
-import '../../constants/theme.dart';
 import '../tabs/tabs_view.dart';
 import 'login_controller.dart';
 
-class Loginview extends StatelessWidget {
-  Loginview({Key? key}) : super(key: key);
+class Loginview extends GetView<LoginController> {
+
+  const Loginview({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
           resizeToAvoidBottomInset: false,
-          body: Column(
-            children: [
-              Stack(
-                clipBehavior: Clip.none,
-                alignment: Alignment.bottomCenter,
-                children: [
-                  ClipPath(
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    clipper: CustomClipPath(),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                        begin: Alignment.topRight,
-                        end: Alignment.bottomLeft,
-                        colors: [
-                          Theme.of(context).primaryColor.withOpacity(0.9),
-                          Theme.of(context).primaryColor.withOpacity(0.3),
-                        ],
-                      )),
-                      width: Get.width,
-                      height: Get.height * 0.3,
-                      child: Center(child: _addLoginText()),
+          body: Form(
+            key: controller.loginFormKey,
+            child: Column(
+              children: [
+                Stack(
+                  clipBehavior: Clip.none,
+                  alignment: Alignment.bottomCenter,
+                  children: [
+                    ClipPath(
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      clipper: CustomClipPath(),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                          begin: Alignment.topRight,
+                          end: Alignment.bottomLeft,
+                          colors: [
+                            Theme.of(context).primaryColor.withOpacity(0.9),
+                            Theme.of(context).primaryColor.withOpacity(0.3),
+                          ],
+                        )),
+                        width: Get.width,
+                        height: Get.height * 0.3,
+                        child: Center(child: _addLoginText()),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Container(
+                    //   decoration: BoxDecoration(
+
+                    //   color: Colors.blueGrey,
+
+                    // borderRadius: BorderRadius.only(topLeft: Radius.circular(15),topRight: Radius.circular(15)),
+                    //     shape: BoxShape.rectangle),
+
+                    margin: EdgeInsets.symmetric(horizontal: 15),
+
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        TxtField(
+                          validator: (value) => value == null || value == ""
+                              ? "enter user name"
+                              : null,
+                          prefixIcon: Icon(Icons.email),
+                          isOutlined: true,
+                          labelText: "Username",
+                        ),
+                        SizedBox(
+                          height: 14,
+                        ),
+                        TxtField(
+                          validator: (value) => value == null || value == ""
+                              ? "enter password"
+                              : null,
+                          obsecure: true,
+                          prefixIcon: Icon(Icons.lock),
+                          isOutlined: true,
+                          labelText: "Passsword",
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                          width: Get.width,
+                          child: MyButton(
+                              buttonText: login,
+                              onTap: () {
+                                if (controller.loginFormKey.currentState!
+                                    .validate()) {
+                                  controller.loginFormKey.currentState?.save();
+                                  Get.off(() => TabsView(),
+                                      transition: Transition.zoom,
+                                      binding: BindingsBuilder.put(
+                                          () => TabsViewController()));
+                                }
+                              }),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        _addLines(),
+                        SizedBox(
+                          height: 20,
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Expanded(
-                flex: 2,
-                child: Container(
-                  //   decoration: BoxDecoration(
-
-                  //   color: Colors.blueGrey,
-
-                  // borderRadius: BorderRadius.only(topLeft: Radius.circular(15),topRight: Radius.circular(15)),
-                  //     shape: BoxShape.rectangle),
-
-                  margin: EdgeInsets.symmetric(horizontal: 15),
-
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 20),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      TxtField(
-                        prefixIcon: Icon(Icons.email),
-                        isOutlined: true,
-                        labelText: "Username",
-                      ),
-                      SizedBox(
-                        height: 14,
-                      ),
-                      TxtField(
-                        obsecure: true,
-                        prefixIcon: Icon(Icons.lock),
-                        isOutlined: true,
-                        labelText: "Passsword",
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
                       Container(
-                        width: Get.width,
-                        child: MyButton(buttonText: login, onTap: () {
+                          width: Get.width * 0.4,
+                          child: MyButton(
 
-
-                          Get.off(()=>TabsView(),
-                          
-                          transition: Transition.zoom,
-                          
-                          binding: BindingsBuilder.put(
                             
-                            ()=>
-                            TabsViewController()));
-                        }),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      _addLines(),
-                      SizedBox(
-                        height: 20,
-                      ),
+                              primary:Get.isDarkMode?null: Colors.blue,
+                              onTap: () {},
+                              buttonText: 'GOOGLE',
+                              icon: FaIcon(FontAwesomeIcons.google))),
+                      Container(
+                          width: Get.width * 0.4,
+                          child: MyButton(
+                              primary: Get.isDarkMode?null:Colors.indigo.shade900,
+                              onTap: () {},
+                              buttonText: 'FACEBOOK',
+                              icon: FaIcon(FontAwesomeIcons.facebook))),
                     ],
                   ),
                 ),
-              ),
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 20),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                        width: Get.width * 0.4,
-                        child: MyButton(
-                            primary: Colors.blue,
-                            onTap: () {},
-                            buttonText: 'GOOGLE',
-                            icon: FaIcon(FontAwesomeIcons.google))),
-                    Container(
-                        width: Get.width * 0.4,
-                        child: MyButton(
-                            primary: Colors.indigo.shade900,
-                            onTap: () {},
-                            buttonText: 'FACEBOOK',
-                            icon: FaIcon(FontAwesomeIcons.facebook))),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: RichText(
-                      text: TextSpan(
-                          text: accounDoesnotExistText,
-                          style: Theme.of(context).textTheme.subtitle1,
-                          children: [
-                            TextSpan(
-                              recognizer: new TapGestureRecognizer()..onTap = () => Get.to(SignupView()),
-                                text: signup,
-                                style: Theme.of(context).textTheme.subtitle1?.copyWith(color: Colors.blue)
-                                   )
-                          ]),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: RichText(
+                        text: TextSpan(
+                            text: accounDoesnotExistText,
+                            style: Theme.of(context).textTheme.subtitle1,
+                            children: [
+                              TextSpan(
+                                  recognizer: new TapGestureRecognizer()
+                                    ..onTap = () => Get.to(SignupView()),
+                                  text: signup,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .subtitle1
+                                      ?.copyWith(color: Colors.blue))
+                            ]),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-            ],
+                SizedBox(
+                  height: 10,
+                ),
+              ],
+            ),
           )),
     );
   }
