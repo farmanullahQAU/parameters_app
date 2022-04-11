@@ -6,6 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:parametric_market_app/components/text_field.dart';
 import 'package:parametric_market_app/constants/constants.dart';
+import 'package:parametric_market_app/screens/signup/signup_controller.dart';
 import 'package:parametric_market_app/screens/signup/signup_view.dart';
 import 'package:parametric_market_app/constants/text_styles.dart';
 import 'package:parametric_market_app/screens/tabs/tabs_controller.dart';
@@ -70,6 +71,7 @@ class Loginview extends GetView<LoginController> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         TxtField(
+                          controller:controller.emailTextEditingController,
                           validator: (value) => value == null || value == ""
                               ? "enter user name"
                               : null,
@@ -81,6 +83,7 @@ class Loginview extends GetView<LoginController> {
                           height: 14,
                         ),
                         TxtField(
+                          controller: controller.passwordTextEditingController,
                           validator: (value) => value == null || value == ""
                               ? "enter password"
                               : null,
@@ -92,20 +95,31 @@ class Loginview extends GetView<LoginController> {
                         SizedBox(
                           height: 20,
                         ),
-                        Container(
-                          width: Get.width,
-                          child: MyButton(
-                              buttonText: login,
-                              onTap: () {
-                                if (controller.loginFormKey.currentState!
-                                    .validate()) {
-                                  controller.loginFormKey.currentState?.save();
-                                  Get.off(() => TabsView(),
-                                      transition: Transition.zoom,
-                                      binding: BindingsBuilder.put(
-                                          () => TabsViewController()));
-                                }
-                              }),
+                        Obx(()=>
+                         AnimatedSwitcher(
+                            transitionBuilder: (child,animation)=>ScaleTransition(scale: animation,child: child,),
+                        
+                            duration: Duration(microseconds: 1000),
+                            child: 
+                            
+                            controller.isLoading.isFalse?
+                            SizedBox(
+                              width: Get.width,
+                              child: MyButton(
+                                  buttonText: login,
+                                  onTap: () async {
+                                    if (controller.loginFormKey.currentState!
+                                        .validate()) {
+                                      controller.loginFormKey.currentState?.save();
+                          
+                          
+                                    await controller.login();
+                                    
+                                 
+                                    }
+                                  }),
+                            ):CircularProgressIndicator()
+                          ),
                         ),
                         SizedBox(
                           height: 20,
@@ -155,7 +169,7 @@ class Loginview extends GetView<LoginController> {
                             children: [
                               TextSpan(
                                   recognizer: new TapGestureRecognizer()
-                                    ..onTap = () => Get.to(SignupView()),
+                                    ..onTap = () => Get.to(SignupView(),binding: BindingsBuilder.put(() => SignupController())),
                                   text: signup,
                                   style: Theme.of(context)
                                       .textTheme

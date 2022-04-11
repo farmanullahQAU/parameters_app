@@ -1,10 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/state_manager.dart';
+import 'package:parametric_market_app/components/date_format.dart';
 import 'package:parametric_market_app/models/user_model.dart';
+import 'package:parametric_market_app/screens/chat/chat_controller.dart';
 
-import '../../../models/message.dart';
-import '../details.dart';
-
-class RecentChat extends StatelessWidget {
+import 'package:get/get.dart';
+import 'package:parametric_market_app/screens/chat/details.dart';
+class RecentChat extends GetView<ChatController> {
 
   //chat users
   final UserModel user;
@@ -14,12 +17,12 @@ class RecentChat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      // onTap: () => Navigator.push(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (_) => Details(user: message.sender!),
-      //   ),
-      // ),
+     onTap: () async {
+await controller.getChatId(user.userId);
+
+Get.to(()=>Details(receiver: user));
+       
+     },
       child: Container(
         padding: const EdgeInsets.symmetric(
           vertical: 10,
@@ -29,7 +32,7 @@ class RecentChat extends StatelessWidget {
             
 radius: 40,
 
-child:  Image.network(user.photoUrl??""),
+child:user.photoUrl==null?Image.asset('images/emoji1.png'):  Image.network(user.photoUrl!),
 
 
           ),
@@ -46,7 +49,7 @@ child:  Image.network(user.photoUrl??""),
                     ),
                   ),
                   Text(
-                    user.userId,
+                    DateFormatter.getFormatedDate(DateTime.now()),
                     style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.normal,
@@ -60,7 +63,7 @@ child:  Image.network(user.photoUrl??""),
             ],
           ),
           subtitle: Text(
-            user.aboutMe??"hi there",
+            user.aboutMe??"Hi there",
             style: const TextStyle(
               color: Colors.blueGrey,
               fontFamily: 'Metropolis Light',

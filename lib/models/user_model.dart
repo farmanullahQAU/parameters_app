@@ -23,6 +23,7 @@
 import '../constants/firestore_constants.dart';
 
 class UserModel {
+  late final String email;
   late final String userId;
   late final String userName;
 
@@ -31,6 +32,7 @@ class UserModel {
   //last name could be null
 
   UserModel({
+    required this.email,
     this.photoUrl,
     this.aboutMe,
     required this.userName,
@@ -45,11 +47,15 @@ class UserModel {
     userName = json[FirestoreConstants.userName];
     photoUrl = json[FirestoreConstants.photoUrl];
     aboutMe = json[FirestoreConstants.aboutMe];
+    email = json[FirestoreConstants.email];
+
   }
 
     Map<String, dynamic> toMap() {
     return {
     FirestoreConstants.userName:userName,
+
+    FirestoreConstants.email:email,
   FirestoreConstants.photoUrl:photoUrl,
     FirestoreConstants.aboutMe:aboutMe,
   

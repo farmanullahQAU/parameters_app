@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/state_manager.dart';
 import 'package:parametric_market_app/database_services/firestore_services.dart';
 import 'package:parametric_market_app/models/user_model.dart';
@@ -11,6 +13,10 @@ import '../../constants/firestore_constants.dart';
 import '../../models/message_model.dart';
 
 class ChatController extends GetxController{
+
+
+
+  final  messageTextController=TextEditingController();
 Query<MessageChat> getMessageQuery(String chatId)=> FirebaseFirestore.instance.collection(FirestoreConstants.pathMessageCollection)
         .doc(chatId)
         .collection(chatId)
@@ -40,23 +46,26 @@ Query<UserModel> getAllUsersQuery()=> FirebaseFirestore.instance.collection(Fire
     super.onInit();
   }
 
-  final String senderId="CkW6BgYnMAa0KP0Yr0iT";
 
   Future<String> getChatId(String receiverId,) async {
+
+    //current loggedin user as a sender
+
+    String? senderId=FirebaseAuth.instance.currentUser?.uid;
  final String? groupChatId;
 
 
-    if (senderId.compareTo(receiverId) > 0) {
+    if (senderId!.compareTo(receiverId)> 0) {
       groupChatId = '$receiverId-$senderId';
     } else {
      groupChatId= '$senderId-$receiverId';
     }
 
-   await FirestoreServices().updateDataFirestore(
-      FirestoreConstants.pathUserCollection,
-      senderId,
-      {FirestoreConstants.chattingWith: receiverId},
-    );
+  //  await FirestoreServices().updateDataFirestore(
+  //     FirestoreConstants.pathUserCollection,
+  //     senderId,
+  //     {FirestoreConstants.chattingWith: receiverId},
+  //   );
 
     return groupChatId;
   }
@@ -72,10 +81,10 @@ Query<UserModel> getAllUsersQuery()=> FirebaseFirestore.instance.collection(Fire
         .doc(DateTime.now().millisecondsSinceEpoch.toString());
 
     MessageChat messageChat = MessageChat(
-      idFrom: senderId,
+      idFrom: FirebaseAuth.instance.currentUser?.uid??"",
       idTo: receiverId,
       timestamp: DateTime.now(),
-      content: "this is the message",
+      content: messageTextController.text,
     );
 
     FirebaseFirestore.instance.runTransaction((transaction) async {

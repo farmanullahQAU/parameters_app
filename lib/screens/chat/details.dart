@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/firestore.dart';
 import 'package:get/state_manager.dart';
@@ -11,15 +12,13 @@ import 'package:parametric_market_app/screens/chat/widgets/chat_message.dart';
 import '../../models/message.dart';
 import '../../models/message_model.dart';
 class Details extends GetView<ChatController> {
-  final String receiver="CkW6BgYnMAa0KP0Yr0iT";
-  final String senderId="faK86D0KkadQ30jtRZIp";
 
 
 
-  final Usr user;
+  final UserModel receiver;
   final MessageService messageService = MessageService();
 
-  Details({Key? key, required this.user}) : super(key: key);
+  Details({Key? key, required this.receiver}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +34,7 @@ class Details extends GetView<ChatController> {
         children: [
           buildContactInformationWidget(),
           Expanded(
-            child: buildChatWidget("${receiver}-${senderId}"),
+            child: buildChatWidget("${FirebaseAuth.instance.currentUser?.uid}-${receiver.userId}"),
           ),
           buildChatInputWidget(context),
         ],
@@ -84,7 +83,7 @@ class Details extends GetView<ChatController> {
             child: SizedBox(
               width: 200.0,
               child: Text(
-                user.name!,
+                receiver.userName,
                 style: const TextStyle(
                   fontSize: 32,
                   fontFamily: 'Metropolis Black',
@@ -144,13 +143,17 @@ class Details extends GetView<ChatController> {
 
   loadingBuilder: (context) => Center(child: CircularProgressIndicator(),),
   errorBuilder: (context, error, stackTrace) => Text(error.toString()),
+
+  
   itemBuilder: (context, snapshot) {
+
+
     // Data is now typed!
    MessageChat message = snapshot.data();
 
     return    ChatMessage(
                 message: message,
-                isReceiver: message.idFrom == receiver,
+                isReceiver: message.idFrom == receiver.userId,
               );
   
   
@@ -199,10 +202,21 @@ class Details extends GetView<ChatController> {
           Expanded(
 
             child: TxtField(
+
+              controller: controller.messageTextController,
               
             suffixIcon:  IconButton(
               
-              onPressed: (){},
+              onPressed: (){
+
+
+                if(controller.messageTextController.text.trim().isNotEmpty)
+                {
+
+                  controller.sendMessage(receiver.userId);
+                }
+
+              },
               
               icon: Icon(Icons.send)),
               

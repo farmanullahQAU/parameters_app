@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:parametric_market_app/constants/text_styles.dart';
 import 'package:parametric_market_app/models/message_model.dart';
 
+import '../../../components/date_format.dart';
 import '../../../models/message.dart';
 
 class ChatMessage extends StatelessWidget {
@@ -78,7 +79,11 @@ class ChatMessage extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: 10,),
-                      Text(getFormatedDate(message.timestamp),style:Theme.of(Get.context!).textTheme.bodySmall),
+                      Text(
+                        
+                        
+                        DateFormatter.
+                        getFormatedDate(message.timestamp),style:Theme.of(Get.context!).textTheme.bodySmall),
                     ],
                   ),
                 ),
@@ -96,18 +101,7 @@ class ChatMessage extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(
-            left: 20,
-          ),
-          child: Text(
-            getFormatedDate(message.timestamp),
-            style: const TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-        ),
+    
         Flexible(
           child: Container(
             padding: const EdgeInsets.symmetric(
@@ -139,7 +133,7 @@ class ChatMessage extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: 10,),
-                      Text(getFormatedDate(message.timestamp),style:Theme.of(Get.context!).textTheme.bodySmall),
+                      Text(DateFormatter.getFormatedDate(message.timestamp),style:Theme.of(Get.context!).textTheme.bodySmall),
                     ],
                   ),
           ),
@@ -148,8 +142,5 @@ class ChatMessage extends StatelessWidget {
     );
   }
 
-  String getFormatedDate(DateTime dateTime) {
-
-    return DateFormat().add_Hm().format(dateTime);
-  }
+ 
 }

@@ -1,19 +1,24 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:parametric_market_app/components/progress_indicator.dart';
 import 'package:parametric_market_app/components/text_field.dart';
 import 'package:parametric_market_app/constants/constants.dart';
 import 'package:parametric_market_app/constants/text_styles.dart';
 import 'package:parametric_market_app/constants/theme.dart';
+import 'package:parametric_market_app/screens/login/login_controller.dart';
+import 'package:parametric_market_app/screens/login/login_view.dart';
+import 'package:parametric_market_app/screens/signup/signup_controller.dart';
 
 import '../../components/mybutton.dart';
 
-class SignupView extends StatelessWidget {
-  SignupView({Key? key}) : super(key: key);
+class SignupView extends GetView<SignupController> {
+  const SignupView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -53,42 +58,86 @@ class SignupView extends StatelessWidget {
           
                   margin: EdgeInsets.symmetric(horizontal: 15),
           
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                       TxtField(
-                        prefixIcon: Icon(Icons.email),
-                        isOutlined: true,
-                        labelText: "Name",
-                                             ),
-               columSizedBox,
-          
-                      TxtField(
-                        prefixIcon: Icon(Icons.email),
-                        isOutlined: true,
-                        labelText: "email",
-                      ),
-               columSizedBox,
-          
-                     
-                      TxtField(
-                        prefixIcon: Icon(Icons.lock),
-                        isOutlined: true,
-                        labelText: "Passsword",
-                      ),
-               columSizedBox,
-          
-                     
-                      Container(
-                        width: Get.width,
+                  child: Form(
+
+                    key:controller.registerKey ,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                         TxtField(
+                           controller: controller.userNameTextEditingController,
+                            validator: (value) => value == null || value == ""
+                              ? "enter name"
+                              : null,
+                          prefixIcon: Icon(Icons.email),
+                          isOutlined: true,
+                          labelText: "Name",
+                                               ),
+                                 columSizedBox,
+                            
+                        TxtField(
+                          controller: controller.emailTextEditingController,
+                             validator: (value) => value == null || value == ""
+                              ? "enter email"
+                              : null,
+                          prefixIcon: Icon(Icons.email),
+                          isOutlined: true,
+                          labelText: "Email",
+                        ),
+                                 columSizedBox,
+                            
+                       
+                        TxtField(
+                          obsecure: true,
+                          controller: controller.passwordTextEditingController,
+                             validator: (value) => value == null || value == ""
+                              ? "enter password"
+                              : null,
+                          prefixIcon: Icon(Icons.lock),
+                          isOutlined: true,
+                          labelText: "Passsword",
+                        ),
+                                 columSizedBox,
+                            
+                       
+                        Obx(()=>
+                        AnimatedSwitcher(
+                            transitionBuilder: (child,animation)=>ScaleTransition(scale: animation,child: child,),
+
+                          
                         
-                        child: MyButton(buttonText:signup.toUpperCase(), onTap: () {}),
-                      ),
-               columSizedBox,
-          
-                     
-                      
-                    ],
+                            duration: Duration(microseconds: 1000),
+                            child: 
+                            
+                            controller.isLoading.isFalse?
+                            
+                            SizedBox(
+                              key:Key("1"),
+                              width: Get.width,
+                              
+                              child: MyButton(buttonText:signup.toUpperCase(), onTap: () async {
+                          
+                          
+                                if(controller.registerKey.currentState!.validate())
+                                {
+                          
+                                  controller.registerKey.currentState?.save();
+                          
+                          
+                                  await controller.signUp();
+                          
+                                  Get.back();
+                                }
+                              }),
+                            ):CircularProgressIndicator(key: Key("2"),)
+                          ),
+                        ),
+                                 columSizedBox,
+                            
+                       
+                        
+                      ],
+                    ),
                   ),
                 ),
               
@@ -105,9 +154,12 @@ class SignupView extends StatelessWidget {
                               style: Theme.of(context).textTheme.subtitle1,
                               children: [
                                 TextSpan(
+
+                                  recognizer:  TapGestureRecognizer()
+                                    ..onTap = () => Get.to(Loginview(),binding: BindingsBuilder.put(() => LoginController())),
                                     text: "Login",
                                     style: Theme.of(context).textTheme.subtitle1
-                                        ?.copyWith(color: Theme.of(context).primaryColor))
+                                        ?.copyWith(color: Colors.blue))
                               ]),
                         ),
                       ),
