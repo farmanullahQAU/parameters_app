@@ -25,7 +25,7 @@ Query<MessageChat> getMessageQuery(String chatId)=> FirebaseFirestore.instance.c
 
 Query<UserModel> getAllUsersQuery()=> FirebaseFirestore.instance.collection(FirestoreConstants.pathUserCollection)
   
-        .orderBy(FirestoreConstants.timestamp, descending: true)
+        // .orderBy(FirestoreConstants.timestamp, descending: true)
 
 
 

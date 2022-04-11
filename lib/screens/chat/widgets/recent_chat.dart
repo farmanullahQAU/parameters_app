@@ -25,18 +25,13 @@ class RecentChat extends StatelessWidget {
           vertical: 10,
         ),
         child: ListTile(
-          leading: Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Image(
-                height: 48.0,
-                width: 48.0,
-                image: NetworkImage(user.photoUrl??""),
-              ),
-            ),
+          leading: CircleAvatar(
+            
+radius: 40,
+
+child:  Image.network(user.photoUrl??""),
+
+
           ),
           title: Column(
             children: [

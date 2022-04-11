@@ -210,7 +210,11 @@ key: _controller.genKey,
       icon: Icon(Icons.chat,size: 40,),
        onPressed: (){
 
-         Get.to(()=>ChatHome());
+         Get.to(()=>ChatHome(),
+         
+         binding: BindingsBuilder.put(() => ChatController())
+         
+         );
        }),
 
 IconButton(
