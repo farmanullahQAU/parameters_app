@@ -16,9 +16,10 @@ class Details extends GetView<ChatController> {
 
 
   final UserModel receiver;
+  final chatId;
   final MessageService messageService = MessageService();
 
-  Details({Key? key, required this.receiver}) : super(key: key);
+  Details({Key? key, required this.receiver,required this.chatId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +35,7 @@ class Details extends GetView<ChatController> {
         children: [
           buildContactInformationWidget(),
           Expanded(
-            child: buildChatWidget("${FirebaseAuth.instance.currentUser?.uid}-${receiver.userId}"),
+            child: buildChatWidget(chatId),
           ),
           buildChatInputWidget(context),
         ],
@@ -207,7 +208,10 @@ class Details extends GetView<ChatController> {
               
             suffixIcon:  IconButton(
               
-              onPressed: (){
+              onPressed: 
+              
+              
+              (){
 
 
                 if(controller.messageTextController.text.trim().isNotEmpty)

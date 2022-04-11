@@ -12,6 +12,8 @@ class TxtField extends StatelessWidget {
   Function? onSaved;
   bool? isOutlined;
   bool? isReadOnly;
+
+  Function? onchange;
   // int? maxLength;
   int? maxLines;
   bool? isLimit;
@@ -19,10 +21,13 @@ class TxtField extends StatelessWidget {
   TextEditingController? controller;
 
   TxtField(
+
+    
       {Key? key,
       this.isReadOnly=false,
       this.obsecure=false,
       this.suffixIcon,
+      this.onchange,
       this.prefixIcon,
       this.labelText,
       this.controller,
@@ -39,6 +44,8 @@ class TxtField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+
+      onChanged: (value)=>onchange!=null?onchange!(value):null,
       
       obscureText: obsecure,
       readOnly: isReadOnly!,

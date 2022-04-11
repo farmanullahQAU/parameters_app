@@ -35,7 +35,7 @@ class ChatMessage extends StatelessWidget {
           child: const Padding(
             padding: EdgeInsets.symmetric(
               horizontal: 10.0,
-              vertical: 20.0,
+              vertical: 25.0,
             ),
 
             child: 
@@ -99,11 +99,11 @@ class ChatMessage extends StatelessWidget {
 
   Widget buildReceiverMessage() {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.end,
       children: [
-    
         Flexible(
           child: Container(
+            
             padding: const EdgeInsets.symmetric(
               horizontal: 20,
               vertical: 8,
@@ -138,6 +138,8 @@ class ChatMessage extends StatelessWidget {
                   ),
           ),
         ),
+
+        SizedBox(width: 10,)
       ],
     );
   }
