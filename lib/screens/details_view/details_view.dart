@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_share_me/flutter_share_me.dart';
@@ -7,10 +8,14 @@ import 'package:get/get.dart';
 import 'package:parametric_market_app/components/description_card.dart';
 import 'package:parametric_market_app/components/image_avatar.dart';
 import 'package:parametric_market_app/components/mybutton.dart';
+import 'package:parametric_market_app/constants/firestore_constants.dart';
+import 'package:parametric_market_app/models/user_model.dart';
+import 'package:parametric_market_app/screens/chat/chat_controller.dart';
 
 import '../../constants/constants.dart';
 import '../../constants/text_styles.dart';
 import '../../models/tyre_model.dart';
+import '../chat/home.dart';
 import 'details_view_controller.dart';
 
 class DetailsViw extends StatelessWidget{
@@ -203,15 +208,20 @@ key: _controller.genKey,
       IconButton(
       
       icon: Icon(Icons.chat,size: 40,),
-       onPressed: (){}),
+       onPressed: (){
+
+         Get.to(()=>ChatHome());
+       }),
 
 IconButton(
 
   icon: Icon(Icons.share,size: 40,),
  onPressed: (){
 
+Get.find<ChatController>().sendMessage("faK86D0KkadQ30jtRZIp");
 
-   _controller.takePicture();
+
+
  }),
  IconButton(
 

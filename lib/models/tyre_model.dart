@@ -1,5 +1,5 @@
 class TyreModel{
-  
+  final String userId;
   final String type;
 
   final double tyreWidth;
@@ -13,6 +13,7 @@ class TyreModel{
 
   TyreModel({
     this.description,
+   required this.userId,
     this.imageUrl,
 
     required this.wheel,

@@ -1,11 +1,12 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:bot_toast/bot_toast.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:parametric_market_app/constants/theme.dart';
+import 'package:parametric_market_app/firebase_options.dart';
 import 'package:parametric_market_app/pages.dart';
-import 'package:parametric_market_app/constants/text_styles.dart';
 import 'binder.dart';
 import 'route_names.dart';
 import 'screens/login/login_view.dart';
@@ -13,7 +14,9 @@ import 'screens/login/login_view.dart';
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-
+  await Firebase.initializeApp(
+  options: DefaultFirebaseOptions.currentPlatform,
+);
   runApp(const Self());
 }
 

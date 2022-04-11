@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../constants/constants.dart';
 
 class TxtField extends StatelessWidget {
-  Icon? suffixIcon;
+  Widget? suffixIcon;
   bool obsecure;
   Icon? prefixIcon;
   String? hintText;
@@ -44,7 +44,7 @@ class TxtField extends StatelessWidget {
       readOnly: isReadOnly!,
       keyboardType: TextInputType.multiline,
 
-      toolbarOptions: ToolbarOptions(
+      toolbarOptions: const ToolbarOptions(
         copy: true,
         paste: true,
         cut: true,
@@ -62,16 +62,17 @@ class TxtField extends StatelessWidget {
       // maxLength: this.isLimit == true ? maxLength : null,
       maxLines: this.maxLines,
       decoration: InputDecoration(
-        
         prefixIcon: prefixIcon,
         
           filled: true,
           // fillColor: bgColor,
           // hoverColor: bgColor,
           border: this.isOutlined == true ? OutlineInputBorder(
+
+            
           borderSide: BorderSide.none,
 
-borderRadius: BorderRadius.circular(20)
+borderRadius: BorderRadius.circular(50)
 
           ) : null,
           //   icon: Icon(Icons.favorite),

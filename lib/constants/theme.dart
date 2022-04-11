@@ -65,15 +65,27 @@ inactiveTrackColor:orangeDarkPrimaryColor.withAlpha(100),
 
   static final darkCustomTheme = ThemeData(
 
-    
+  
+    inputDecorationTheme: InputDecorationTheme(
+
+
+suffixIconColor: Colors.green
+
+    ),
     outlinedButtonTheme: OutlinedButtonThemeData(
+      
+      
         style: OutlinedButton.styleFrom(
+
+          
       backgroundColor: Colors.black,
       textStyle: const TextStyle(color: Colors.white),
       padding: const EdgeInsets.symmetric(vertical: 15),
-      shape: RoundedRectangleBorder(
-        borderRadius: new BorderRadius.circular(10.0),
-      ),
+
+      
+      // shape: RoundedRectangleBorder(
+      //   borderRadius: new BorderRadius.circular(10.0),
+      // ),
     )),
 
     sliderTheme: const SliderThemeData(

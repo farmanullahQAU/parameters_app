@@ -32,6 +32,7 @@ List<TyreModel> get tyresList=>_tyresList;
       //     rimOffset: 22, rimWidth: 55,rimDimeter: 76), type: "Rim", tyreWidth: 34),
 
             TyreModel(
+              userId: "CkW6BgYnMAa0KP0Yr0iT",
              description: "Perfect condition 83x12 rim for sale , cash talk no low ballers. PM, call or whatsapp, price negiotiable. bla bla bla.....",
 
         
@@ -42,11 +43,12 @@ List<TyreModel> get tyresList=>_tyresList;
           
           rimOffset: 41, rimWidth: 83,rimDimeter: 12), type: "Rim", tyreWidth: 88),
             TyreModel(
-              
+              userId: "TUEBUTBSbUHxrT6RlvAV",
              description: "Perfect condition 34x30 rim for sale , cash talk no low ballers. PM, call or whatsapp, price negiotiable......",
 
         
         wheel: WheelModel(
+          
          price: 174, 
 
           condition: "Used",
@@ -55,6 +57,7 @@ List<TyreModel> get tyresList=>_tyresList;
           shortDescription: "Polished",
           rimOffset: 47, rimWidth: 10,rimDimeter: 15), type: "Rim", tyreWidth: 11),
             TyreModel(
+              userId: "faK86D0KkadQ30jtRZIp",
         description: "Short offering descriptions3 goes here....",
         
         wheel: WheelModel(
@@ -65,6 +68,7 @@ List<TyreModel> get tyresList=>_tyresList;
           
           rimOffset: 4, rimWidth: 16,rimDimeter: 99), type: "Rim", tyreWidth: 32),
            TyreModel(
+             userId: "CkW6BgYnMAa0KP0Yr0iT",
              
         description: "Short offering descriptions3 goes here....",
         
@@ -77,6 +81,7 @@ List<TyreModel> get tyresList=>_tyresList;
           
           rimOffset: 1, rimWidth: 12,rimDimeter: 99), type: "Tyre", tyreWidth: 66),
            TyreModel(
+             userId: "CkW6BgYnMAa0KP0Yr0iT",
         description: "Short offering descriptions4 goes here....",
         
         wheel: WheelModel(
@@ -87,6 +92,7 @@ List<TyreModel> get tyresList=>_tyresList;
           
           rimOffset: 87, rimWidth: 43,rimDimeter: 90), type: "Wheel", tyreWidth: 12),
           TyreModel(
+            userId: "TUEBUTBSbUHxrT6RlvAV",
         description: "Short offering descriptions3 goes here....",
         
         wheel: WheelModel(
@@ -97,6 +103,7 @@ List<TyreModel> get tyresList=>_tyresList;
           
           rimOffset: 6, rimWidth: 43,rimDimeter: 90), type: "Wheel", tyreWidth: 12),
           TyreModel(
+            userId: "faK86D0KkadQ30jtRZIp",
         description: "Short offering descriptions3 goes here....",
         
         wheel: WheelModel(
@@ -107,6 +114,8 @@ List<TyreModel> get tyresList=>_tyresList;
           
           rimOffset: 4, rimWidth: 8,rimDimeter: 22), type: "RIM", tyreWidth: 85),
           TyreModel(
+            userId: "TUEBUTBSbUHxrT6RlvAV",
+
         description: "Short offering descriptions3 goes here....",
         
         wheel: WheelModel(
@@ -118,6 +127,7 @@ List<TyreModel> get tyresList=>_tyresList;
           rimOffset: 33, rimWidth: 10,rimDimeter: 16), type: "TYRE", tyreWidth: 35),
 
                 TyreModel(
+                  userId: "faK86D0KkadQ30jtRZIp",
         description: "Short offering descriptions3 goes here....",
         
         wheel: WheelModel(
@@ -128,6 +138,7 @@ List<TyreModel> get tyresList=>_tyresList;
           
           rimOffset: 23, rimWidth: 12,rimDimeter: 15), type: "TYRE", tyreWidth: 9),
                 TyreModel(
+                  userId: "CkW6BgYnMAa0KP0Yr0iT",
         description: "Short offering descriptions3 goes here....",
         
         wheel: WheelModel(
@@ -140,6 +151,7 @@ List<TyreModel> get tyresList=>_tyresList;
 
 
               TyreModel(
+                userId: "faK86D0KkadQ30jtRZIp",
         description: "Short offering descriptions3 goes here....",
         
         wheel: WheelModel(
@@ -152,6 +164,8 @@ List<TyreModel> get tyresList=>_tyresList;
 
 
               TyreModel(
+
+                userId: "TUEBUTBSbUHxrT6RlvAV",
         description: "Short offering descriptions3 goes here....",
         
         wheel: WheelModel(

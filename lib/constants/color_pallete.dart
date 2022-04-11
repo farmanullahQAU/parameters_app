@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
  class ColorPalette {
   static const themeColor = Colors.deepOrange;
+  static Color accentColor = const Color(0xFF5B61B9);
   // static const iconColor = Colors.deepOrange;
   // static const btnNewColor = Color(0xffFF2800);
   // static const btnNewColor1 = Color(0xffFF2800);

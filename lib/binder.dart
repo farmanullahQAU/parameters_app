@@ -1,5 +1,6 @@
 
 import 'package:get/get.dart';
+import 'package:parametric_market_app/screens/chat/chat_controller.dart';
 import 'package:parametric_market_app/screens/login/login_controller.dart';
 import 'package:parametric_market_app/screens/tabs/tabs_controller.dart';
 
@@ -24,6 +25,7 @@ class Binder extends Bindings {
      Get.lazyPut<SearchViewController>(() => SearchViewController());
 
      Get.lazyPut<LoginController>(() => LoginController());
+     Get.lazyPut<ChatController>(() => ChatController());
      
 
     // Get.lazyPut<LibraryViewController>(() => LibraryViewController());
